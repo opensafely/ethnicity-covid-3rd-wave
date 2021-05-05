@@ -32,6 +32,46 @@ global outcomes "tested positivetest hes icu onscoviddeath ons_noncoviddeath ons
 *  Create required cohort  *
 ****************************
 
+**************************** HOUSEHOLD VARS*******************************************
+
+*No kids/kids under 12/up to 18
+*Identify kids under 12, or kids under 18
+gen nokids=1 if age<12
+recode nokids .=2 if age<18 
+bysort household_id: egen min_kids=min(nokids) 
+gen kids_cat3=min_kids
+recode kids_cat3 .=0 
+lab define kids_cat3  0 "No kids" 1 "Kids under 12" 2 "Kids under 18"
+lab val kids_cat3 kids_cat3
+drop min_kids
+
+*Dose-response exposure
+recode nokids 2=.
+bysort household_id: egen number_kids=count(nokids)
+gen gp_number_kids=number_kids
+recode gp_number_kids 3/max=3
+recode gp_number_kids 1=2 2=3 3=4
+replace gp_number_kids=0 if kids_cat3==0 
+replace gp_number_kids=1 if kids_cat3==2 
+
+lab var gp_number_kids "Number kids under 12 years in hh"
+drop nokids
+lab define   gp_number_kids 0 none  1 "only >12 years" ///
+2 "1 child <12" ///
+3 "2 children <12" ///
+4 "3+ children <12"
+lab val gp_number_kids gp_number_kids
+
+tab kids_cat3 gp_number_kids, miss
+ 
+
+/* DROP ALL KIDS, AS HH COMPOSITION VARS ARE NOW MADE */
+drop if age<18
+
+*Total number adults in household (to check hh size)
+bysort household_id: gen tot_adults_hh=_N
+recode tot_adults_hh 3/max=3
+
 /* DROP ALL KIDS */
 noi di "DROPPING AGE<18:" 
 drop if age<18
