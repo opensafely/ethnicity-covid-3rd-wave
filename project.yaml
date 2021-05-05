@@ -38,7 +38,7 @@ actions:
         stsethes: output/analysis_dataset_STSET_hes.dta
         stsetons_icu: output/analysis_dataset_STSET_icu.dta
       moderately_sensitive:
-        log: logs/01c_eth_cr_stset_hes_icu.log
+        log: logs/01c_eth_cr_stset_hes.log
 
   cr_ons:
     run: stata-mp:latest analysis/01d_eth_cr_stset_death.do

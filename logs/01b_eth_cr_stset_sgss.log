@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /workspace/logs/01b_eth_cr_stset_sgss.log
+  log type:  text
+ opened on:   5 May 2021, 17:26:55
+
+. 
+. global outcomes "tested positivetest"
+
+. 
+. ****************************************************************
+. *  Create outcome specific datasets for the whole population  *
+. *****************************************************************
+. 
+. 
+. foreach i of global outcomes {
+  2.         use ./output/analysis_dataset.dta, clear
+  3.         drop if `i'_date <= indexdate 
+  4.         stset stime_`i', fail(`i')                              ///     
+>         id(patient_id) enter(indexdate) origin(indexdate)
+  5.         save ./output/analysis_dataset_STSET_`i'.dta, replace
+  6. }       
+(0 observations deleted)
+
+                id:  patient_id
+     failure event:  tested != 0 & tested < .
+obs. time interval:  (stime_tested[_n-1], stime_tested]
+ enter on or after:  time indexdate
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time indexdate
+
+------------------------------------------------------------------------------
+     78,751  total observations
+          0  exclusions
+------------------------------------------------------------------------------
+     78,751  observations remaining, representing
+     78,751  subjects
+     53,336  failures in single-failure-per-subject data
+  5,265,516  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =       119
+(note: file ./output/analysis_dataset_STSET_tested.dta not found)
+file ./output/analysis_dataset_STSET_tested.dta saved
+(0 observations deleted)
+
+                id:  patient_id
+     failure event:  positivetest != 0 & positivetest < .
+obs. time interval:  (stime_positivetest[_n-1], stime_positivetest]
+ enter on or after:  time indexdate
+ exit on or before:  failure
+    t for analysis:  (time-origin)
+            origin:  time indexdate
+
+------------------------------------------------------------------------------
+     78,751  total observations
+          0  exclusions
+------------------------------------------------------------------------------
+     78,751  observations remaining, representing
+     78,751  subjects
+     53,315  failures in single-failure-per-subject data
+  5,255,756  total analysis time at risk and under observation
+                                                at risk from t =         0
+                                     earliest observed entry t =         0
+                                          last observed exit t =       119
+(note: file ./output/analysis_dataset_STSET_positivetest.dta not found)
+file ./output/analysis_dataset_STSET_positivetest.dta saved
+
+. 
+. 
+.         
+. * Close log file 
+. log close
+      name:  <unnamed>
+       log:  /workspace/logs/01b_eth_cr_stset_sgss.log
+  log type:  text
+ closed on:   5 May 2021, 17:26:59
+-------------------------------------------------------------------------------
