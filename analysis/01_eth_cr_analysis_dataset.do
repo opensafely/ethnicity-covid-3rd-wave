@@ -359,8 +359,8 @@ replace hh_total_cat=1 if hh_size >=1 & hh_size<=2
 replace hh_total_cat=2 if hh_size >=3 & hh_size<=5
 replace hh_total_cat=3 if hh_size >=6 & hh_size<=10
 replace hh_total_cat=4 if hh_size>10 & hh_size!=.
-replace hh_total_cat=9 if hh_size==0  //unknown
-replace hh_total_cat=5 if carehome==1  
+replace hh_total_cat=5 if hh_size==0  //unknown
+replace hh_total_cat=6 if carehome==1  
 
 
 *who are people with missing household size
@@ -372,8 +372,9 @@ label define hh_total_cat 1 "1-2" ///
 						2 "3-5" ///
 						3 "6-10" ///
 						4 "11+" ///
-						5 "carehome" ///
-						9 "Unknown"
+						5 "Unknown" ///
+						6 "carehome" 
+						
 											
 label values hh_total_cat hh_total_cat
 
@@ -963,6 +964,10 @@ lab var betablockers_date 					"Beta blocker in last 12 months"
 lab var calcium_channel_blockers_date 		"CCB in last 12 months"
 lab var spironolactone_date 				"Spironolactone in last 12 months"
 lab var thiazide_diuretics_date				"TZD in last 12 months"
+
+*kids
+lab var kids_cat3							"Kids in the household 3 categories"
+lab var gp_number_kids						"Kids <12 in household dose response"
 
 * Outcomes and follow-up
 label var indexdate					"Date of study start (Feb 1 2020)"

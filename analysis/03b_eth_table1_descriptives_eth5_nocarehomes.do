@@ -230,8 +230,11 @@ file write tablecontent _n
 qui summarizevariable, variable(hh_size)
 file write tablecontent _n
 
-qui tabulatevariable, variable(hh_total_cat) min(1) max(9) missing
+qui tabulatevariable, variable(hh_total_cat) min(1) max(5) 
 file write tablecontent _n 
+
+qui tabulatevariable, variable(kids_cat3) min(0) max(2)
+file write tablecontent _n
 
 qui summarizevariable, variable(gp_consult_count) 
 file write tablecontent _n 

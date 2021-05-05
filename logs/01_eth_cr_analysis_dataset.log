@@ -3,7 +3,7 @@
        log:  /Users/lsh152058/Desktop/GitHub/ethnicity-covid-3rd-wave/logs/01_eth_cr_ana
 > lysis_dataset.log
   log type:  text
- opened on:   5 May 2021, 18:47:36
+ opened on:   5 May 2021, 19:11:45
 
 . 
 . clear
@@ -2481,10 +2481,10 @@ hh_size                                                                      (un
 . replace hh_total_cat=4 if hh_size>10 & hh_size!=.
 (109 real changes made)
 
-. replace hh_total_cat=9 if hh_size==0  //unknown
+. replace hh_total_cat=5 if hh_size==0  //unknown
 (0 real changes made)
 
-. replace hh_total_cat=5 if carehome==1  
+. replace hh_total_cat=6 if carehome==1  
 (11,780 real changes made)
 
 . 
@@ -2520,7 +2520,7 @@ hh_size                                                                      (un
      hh_size |         92    11.01087    .1042572         11         12
 
 ----------------------------------------------------------------------------------------
--> hh_total_cat = 5
+-> hh_total_cat = 6
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
@@ -2532,9 +2532,10 @@ hh_size                                                                      (un
 >                                                 2 "3-5" ///
 >                                                 3 "6-10" ///
 >                                                 4 "11+" ///
->                                                 5 "carehome" ///
->                                                 9 "Unknown"
+>                                                 5 "Unknown" ///
+>                                                 6 "carehome" 
 
+.                                                 
 .                                                                                       
 >   
 . label values hh_total_cat hh_total_cat
@@ -4111,6 +4112,14 @@ ons_noncovi |
 . lab var thiazide_diuretics_date                         "TZD in last 12 months"
 
 . 
+. *kids
+. lab var kids_cat3                                                       "Kids in the h
+> ousehold 3 categories"
+
+. lab var gp_number_kids                                          "Kids <12 in household
+>  dose response"
+
+. 
 . * Outcomes and follow-up
 . label var indexdate                                     "Date of study start (Feb 1 20
 > 20)"
@@ -4280,16 +4289,15 @@ ons_noncovi |
 . /* TIDY DATA==================================================================*/
 . *  Drop variables that are not needed (those not labelled)
 . ds, not(varlabel)
-confirmed_~e  bp_sys_dat~d  perm_immun~e  hba1c_per~ge  onssuspect~e  temp2
-primary_c~se  bp_dias_da~e  perm_immun~f  creatinine    dereg_date    SCr_adj
-primary_c~re  bp_dias_da~d  temp_immun~e  diabetes_t~e  ae_censor_~e  min
-suspected_~e  ~l_date_date  temp_immun~f  diabetes_e~s  cpnsd~r_date  max
-ae_date       hba1c~l_date  died_ons_c..  diabetes_e~r  onsconfirm..  diabcat
-cpnsd~h_date  hba1c_perc..  d~nfirmedc~y  kids_cat3     carehometype
-ethni~6_date  crea~te_date  died_ons_s~y  number_kids   bmi_time
-ethni~y_date  crea~ne_date  died_ons_c~g  tot_adults~h  bmi_age
-bmi_measured  smoki~e_date  ethnicity     index         cancer_cat
-bp_sys_dat~e  smoki~s_date  has_consul~y  onsconfirm..  temp1
+confirmed_~e  bp_sys_dat~e  smoki~e_date  died_ons_c~g  tot_adults~h  bmi_time
+primary_c~se  bp_sys_dat~d  smoki~s_date  ethnicity     index         bmi_age
+primary_c~re  bp_dias_da~e  perm_immun~e  has_consul~y  onsconfirm..  cancer_cat
+suspected_~e  bp_dias_da~d  perm_immun~f  hba1c_per~ge  onssuspect~e  temp1
+ae_date       ~l_date_date  temp_immun~e  creatinine    dereg_date    temp2
+cpnsd~h_date  hba1c~l_date  temp_immun~f  diabetes_t~e  ae_censor_~e  SCr_adj
+ethni~6_date  hba1c_perc..  died_ons_c..  diabetes_e~s  cpnsd~r_date  min
+ethni~y_date  crea~te_date  d~nfirmedc~y  diabetes_e~r  onsconfirm..  max
+bmi_measured  crea~ne_date  died_ons_s~y  number_kids   carehometype  diabcat
 
 . drop `r(varlist)'
 
@@ -4334,5 +4342,5 @@ file ./output/analysis_dataset.dta saved
        log:  /Users/lsh152058/Desktop/GitHub/ethnicity-covid-3rd-wave/logs/01_eth_cr_ana
 > lysis_dataset.log
   log type:  text
- closed on:   5 May 2021, 18:48:28
+ closed on:   5 May 2021, 19:12:14
 ----------------------------------------------------------------------------------------

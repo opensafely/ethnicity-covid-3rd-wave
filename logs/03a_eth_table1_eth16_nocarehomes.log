@@ -1,8 +1,9 @@
--------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  /workspace/logs/03a_eth_table1_eth16_nocarehomes.log
+       log:  /Users/lsh152058/Desktop/GitHub/ethnicity-covid-3rd-wave/logs/03a_eth_table
+> 1_eth16_nocarehomes.log
   log type:  text
- opened on:   5 May 2021, 17:31:40
+ opened on:   5 May 2021, 19:04:13
 
 . 
 . * Open Stata dataset
@@ -12,7 +13,6 @@
 (11,780 observations deleted)
 
 . safetab ethnicity_16,m 
-13
 
 Eth 16 categories |      Freq.     Percent        Cum.
 ------------------+-----------------------------------
@@ -37,11 +37,9 @@ White + Caribbean |      3,109        4.64       18.78
             Total |     66,971      100.00
 
 . 
-.  /* PROGRAMS TO AUTOMATE TABULATIONS=========================================
-> ==*/ 
+.  /* PROGRAMS TO AUTOMATE TABULATIONS===========================================*/ 
 . 
-. *****************************************************************************
-> ***
+. ********************************************************************************
 . * All below code from K Baskharan 
 . * Generic code to output one row of table
 . 
@@ -59,16 +57,15 @@ White + Caribbean |      3,109        4.64       18.78
 .         qui cou if `variable' `condition'
   7.         local rowdenom = r(N)
   8.         local colpct = 100*(r(N)/`overalldenom')
-  9.         file write tablecontent %9.0gc (`rowdenom')  (" (") %3.1f (`colpct
-> ') (")") _tab
+  9.         file write tablecontent %9.0gc (`rowdenom')  (" (") %3.1f (`colpct') (")") 
+> _tab
  10. 
 .         forvalues i=1/17{
  11.         qui cou if ethnicity_16 == `i'
  12.         local rowdenom = r(N)
  13.         qui cou if ethnicity_16 == `i' & `variable' `condition'
  14.         local pct = 100*(r(N)/`rowdenom') 
- 15.         file write tablecontent %9.0gc (r(N)) (" (") %3.1f (`pct') (")") _
-> tab
+ 15.         file write tablecontent %9.0gc (r(N)) (" (") %3.1f (`pct') (")") _tab
  16.         }
  17.         
 .         file write tablecontent _n
@@ -89,16 +86,15 @@ White + Caribbean |      3,109        4.64       18.78
 .         qui cou if `variable' `condition'
   5.         local rowdenom = r(N)
   6.         local colpct = 100*(r(N)/`overalldenom')
-  7.         file write tablecontent %9.0gc (`rowdenom')  (" (") %3.1f (`colpct
-> ') (")") _tab
+  7.         file write tablecontent %9.0gc (`rowdenom')  (" (") %3.1f (`colpct') (")") 
+> _tab
   8. 
 .         forvalues i=1/17{
   9.         qui cou if ethnicity_16 == `i'
  10.         local rowdenom = r(N)
  11.         qui cou if ethnicity_16 == `i' & `variable' `condition'
  12.         local pct = 100*(r(N)/`rowdenom') 
- 13.         file write tablecontent %9.0gc (r(N)) (" (") %3.1f (`pct') (")") _
-> tab
+ 13.         file write tablecontent %9.0gc (r(N)) (" (") %3.1f (`pct') (")") _tab
  14.         }
  15.         
 .         file write tablecontent _n
@@ -118,15 +114,13 @@ White + Caribbean |      3,109        4.64       18.78
 > the program counts if variable and condition and returns the counts
 > column percentages are then automatically generated
 > this is then written to the text file 'tablecontent' 
-> the number followed by space, brackets, formatted pct, end bracket and then t
-> ab
+> the number followed by space, brackets, formatted pct, end bracket and then tab
 > 
 > the format %3.1f specifies length of 3, followed by 1 dp. 
 > 
 > */ 
 . 
-. *****************************************************************************
-> ***
+. ********************************************************************************
 . * Generic code to output one section (varible) within table (calls above)
 . 
 . cap prog drop tabulatevariable
@@ -138,20 +132,17 @@ White + Caribbean |      3,109        4.64       18.78
   3.         file write tablecontent ("`lab'") _n 
   4. 
 .         forvalues varlevel = `min'/`max'{ 
-  5.                 generaterow, variable(`variable') condition("==`varlevel'"
-> )
+  5.                 generaterow, variable(`variable') condition("==`varlevel'")
   6.         }
   7.         
-.         if "`missing'"!="" generaterow, variable(`variable') condition("== 12
-> ")
+.         if "`missing'"!="" generaterow, variable(`variable') condition("== 12")
   8.         
 . 
 . 
 . end
 
 . 
-. *****************************************************************************
-> ***
+. ********************************************************************************
 . 
 . /* Explanatory Notes 
 > 
@@ -169,8 +160,7 @@ White + Caribbean |      3,109        4.64       18.78
 > 
 > */ 
 . 
-. *****************************************************************************
-> ***
+. ********************************************************************************
 . * Generic code to qui summarize a continous variable 
 . 
 . cap prog drop summarizevariable 
@@ -184,14 +174,11 @@ White + Caribbean |      3,109        4.64       18.78
 . 
 .         qui summarize `variable', d
   5.         file write tablecontent ("Mean (SD)") _tab 
-  6.         file write tablecontent  %3.1f (r(mean)) (" (") %3.1f (r(sd)) (")"
-> ) _tab
+  6.         file write tablecontent  %3.1f (r(mean)) (" (") %3.1f (r(sd)) (")") _tab
   7.         
-.         forvalues i=1/17{                                                    
->    
+.         forvalues i=1/17{                                                       
   8.         qui summarize `variable' if ethnicity_16 == `i', d
-  9.         file write tablecontent  %3.1f (r(mean)) (" (") %3.1f (r(sd)) (")"
-> ) _tab
+  9.         file write tablecontent  %3.1f (r(mean)) (" (") %3.1f (r(sd)) (")") _tab
  10.         }
  11. 
 . file write tablecontent _n
@@ -199,13 +186,13 @@ White + Caribbean |      3,109        4.64       18.78
 .         
 .         qui summarize `variable', d
  13.         file write tablecontent ("Median (IQR)") _tab 
- 14.         file write tablecontent %3.1f (r(p50)) (" (") %3.1f (r(p25)) ("-")
->  %3.1f (r(p75)) (")") _tab
+ 14.         file write tablecontent %3.1f (r(p50)) (" (") %3.1f (r(p25)) ("-") %3.1f (r
+> (p75)) (")") _tab
  15.         
 .         forvalues i=1/17{
  16.         qui summarize `variable' if ethnicity_16 == `i', d
- 17.         file write tablecontent %3.1f (r(p50)) (" (") %3.1f (r(p25)) ("-")
->  %3.1f (r(p75)) (")") _tab
+ 17.         file write tablecontent %3.1f (r(p50)) (" (") %3.1f (r(p25)) ("-") %3.1f (r
+> (p75)) (")") _tab
  18.         }
  19.         
 . file write tablecontent _n
@@ -213,18 +200,15 @@ White + Caribbean |      3,109        4.64       18.78
 . end
 
 . 
-. /* INVOKE PROGRAMS FOR TABLE 1===============================================
-> =*/ 
+. /* INVOKE PROGRAMS FOR TABLE 1================================================*/ 
 . 
 . *Set up output file
 . cap file close tablecontent
 
 . file open tablecontent using ./output/table1_eth16.txt, write text replace
-(note: file ./output/table1_eth16.txt not found)
 
 . 
-. file write tablecontent ("Table 1: Demographic and Clinical Characteristics")
->  _n
+. file write tablecontent ("Table 1: Demographic and Clinical Characteristics") _n
 
 . 
 . * ethnicity_16 labelled columns
@@ -266,42 +250,42 @@ White + Caribbean |      3,109        4.64       18.78
 . 
 . 
 . 
-. file write tablecontent _tab ("Total")                                       
->              _tab ///
->                                                          ("`lab1'")          
->                                      _tab ///
->                                                          ("`lab2'")          
->                                      _tab ///
->                                                          ("`lab3'")          
->                                      _tab ///
->                                                          ("`lab4'")          
->                                      _tab ///
->                                                          ("`lab5'")          
->                                      _tab ///
->                                                          ("`lab6'")          
->                                      _tab ///
->                                                          ("`lab7'")          
->                                      _tab ///
->                                                          ("`lab8'")          
->                                      _tab ///
->                                                          ("`lab9'")          
->                                      _tab ///
->                                                          ("`lab10'")         
->                                      _tab ///
->                                                          ("`lab11'")         
->                                      _tab ///
->                                                          ("`lab12'")         
->                                      _tab ///
->                                                          ("`lab13'")         
->                                      _tab ///
->                                                          ("`lab14'")         
->                                      _tab ///
->                                                          ("`lab15'")         
->                                      _tab ///
->                                                          ("`lab16'")         
->                                      _tab ///
->                                                          ("`lab17'")         
->                                      _n 
+. file write tablecontent _tab ("Total")                                                
+>     _tab ///
+>                                                          ("`lab1'")                   
+>                             _tab ///
+>                                                          ("`lab2'")                   
+>                             _tab ///
+>                                                          ("`lab3'")                   
+>                             _tab ///
+>                                                          ("`lab4'")                   
+>                             _tab ///
+>                                                          ("`lab5'")                   
+>                             _tab ///
+>                                                          ("`lab6'")                   
+>                             _tab ///
+>                                                          ("`lab7'")                   
+>                             _tab ///
+>                                                          ("`lab8'")                   
+>                             _tab ///
+>                                                          ("`lab9'")                   
+>                             _tab ///
+>                                                          ("`lab10'")                  
+>                             _tab ///
+>                                                          ("`lab11'")                  
+>                             _tab ///
+>                                                          ("`lab12'")                  
+>                             _tab ///
+>                                                          ("`lab13'")                  
+>                             _tab ///
+>                                                          ("`lab14'")                  
+>                             _tab ///
+>                                                          ("`lab15'")                  
+>                             _tab ///
+>                                                          ("`lab16'")                  
+>                             _tab ///
+>                                                          ("`lab17'")                  
+>                             _n 
 
 .                                                          
 . 
@@ -310,7 +294,6 @@ White + Caribbean |      3,109        4.64       18.78
 . 
 . format hba1c_pct bmi egfr %9.2f
 
-. 
 . 
 . gen byte Denominator=1
 
@@ -342,6 +325,11 @@ White + Caribbean |      3,109        4.64       18.78
 . qui tabulatevariable, variable(hh_total_cat) min(1) max(9) missing
 
 . file write tablecontent _n 
+
+. 
+. qui tabulatevariable, variable(kids_cat3) min(0) max(2)
+
+. file write tablecontent _n
 
 . 
 . qui summarizevariable, variable(gp_consult_count) 
@@ -453,7 +441,8 @@ White + Caribbean |      3,109        4.64       18.78
 . * Close log file 
 . log close
       name:  <unnamed>
-       log:  /workspace/logs/03a_eth_table1_eth16_nocarehomes.log
+       log:  /Users/lsh152058/Desktop/GitHub/ethnicity-covid-3rd-wave/logs/03a_eth_table
+> 1_eth16_nocarehomes.log
   log type:  text
- closed on:   5 May 2021, 17:34:06
--------------------------------------------------------------------------------
+ closed on:   5 May 2021, 19:05:27
+----------------------------------------------------------------------------------------
