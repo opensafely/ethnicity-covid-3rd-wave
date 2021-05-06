@@ -340,4 +340,4 @@ file close tablecontent
 * Close log file 
 log close
 
-import delimited "/Users/lsh152058/Desktop/GitHub/ethnicity-covid-3rd-wave/output/table1_eth16.txt", delimiter(tab) clear 
+import delimited "./output/table1_eth16.txt", delimiter(tab) clear 
