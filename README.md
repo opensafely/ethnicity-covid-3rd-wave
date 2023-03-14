@@ -1,4 +1,4 @@
-${https://github.com/opensafely/ethnicity-covid-3rd-wave}
+${ethnicity-covid-3rd-wave}
 You can run this project via Gitpod in a web browser by clicking on this badge: Gitpod ready-to-code
 
 View on OpenSAFELY
